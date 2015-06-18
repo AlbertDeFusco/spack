@@ -23,8 +23,15 @@
 # Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 import os
+from cpuinfo import cpuinfo
 import tempfile
 from llnl.util.filesystem import *
+
+def samArch():
+  cpu=cpuinfo.get_cpu_info()['brand'].split()[3:5]
+  if(cpu[0] == "E5-2620" and cpu[1] == "v3"):
+    return "haswell"
+
 
 # This lives in $prefix/lib/spack/spack/__file__
 prefix = ancestor(__file__, 4)
@@ -95,7 +102,7 @@ curl = which("curl", required=True)
 # Whether to build in tmp space or directly in the stage_path.
 # If this is true, then spack will make stage directories in
 # a tmp filesystem, and it will symlink them into stage_path.
-use_tmp_stage = True
+use_tmp_stage = False
 
 # Locations to use for staging and building, in order of preference
 # Use a %u to add a username to the stage paths here, in case this
@@ -125,7 +132,7 @@ do_checksum = True
 # 3. A function that returns a string:
 #    Spack will use this function to determine the sys_type.
 #
-sys_type = None
+sys_type = samArch()
 
 
 #

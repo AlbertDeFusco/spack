@@ -12,6 +12,9 @@ class Mvapich2(Package):
     version('2.0', '9fbb68a4111a8b6338e476dc657388b4',
             url='http://mvapich.cse.ohio-state.edu/download/mvapich/mv2/mvapich2-2.0.tar.gz')
 
+    version('2.1', '0095ceecb19bbb7fb262131cb9c2cdd6',
+            url='http://mvapich.cse.ohio-state.edu/download/mvapich/mv2/mvapich2-2.1.tar.gz')
+
     provides('mpi@:2.2', when='@1.9')    # MVAPICH2-1.9 supports MPI 2.2
     provides('mpi@:3.0', when='@2.0')    # MVAPICH2-2.0 supports MPI 3.0
 
@@ -80,7 +83,7 @@ class Mvapich2(Package):
             configure_args.append("--with-device=ch3:psm")
         else:
             # throw this flag on IB systems
-            configure_args.append("--with-device=ch3:mrail", "--with-rdma=gen2")
+            configure_args.extend( ["--with-device=ch3:mrail", "--with-rdma=gen2"] )
 
         # TODO: shared-memory build
 

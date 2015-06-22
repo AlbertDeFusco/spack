@@ -31,7 +31,7 @@ class Fftw(Package):
 
     def install(self, spec, prefix):
         # FIXME: Modify the configure line to suit your build system here.
-        config_args = ["--prefix=%s" % prefix, "CC=mpicc", "CXX=mpicxx", "FC=mpif90"]
+        config_args = ["--prefix=%s" % prefix] #, "CC=mpicc", "CXX=mpicxx", "FC=mpif90"]
 
 	if spec.satisfies("=haswell"):
 	  config_args.extend( ["--enable-avx",

@@ -10,10 +10,11 @@ class Boost(Package):
        encourages both commercial and non-commercial use.
     """
     homepage = "http://www.boost.org"
-    url      = "http://downloads.sourceforge.net/project/boost/boost/1.55.0/boost_1_55_0.tar.bz2"
+    url      = "http://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
     list_url = "http://sourceforge.net/projects/boost/files/boost/"
     list_depth = 2
 
+    version('1.58.0', 'b8839650e61e9c1c0a89f371dd475546')
     version('1.55.0', 'd6eef4b4cacb2183f2bf265a5a03a354')
     version('1.54.0', '15cb8c0803064faef0c4ddf5bc5ca279')
     version('1.53.0', 'a00d22605d5dbcfb4c9936a9b35bc4c2')

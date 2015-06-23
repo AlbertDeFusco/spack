@@ -39,11 +39,13 @@ class Openmpi(Package):
         if not self.compiler.f77 and not self.compiler.fc:
             config_args.append("--enable-mpi-fortran=no")
 
-	if spec.architecture == "haswell":
+	if spec.satisfies("=haswell"):
 	  config_args.extend([ "--with-slurm",
 	                       "--enable-mpi-fortran",
 			       "--with-openib"
 			       ])
+	  #config_args.append('CCFLAGS="-lpthread"')
+	  #config_args.append('CXXFLAGS="-lpthread"')
 
 
         configure(*config_args)

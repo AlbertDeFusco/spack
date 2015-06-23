@@ -92,15 +92,15 @@ class Mvapich2(Package):
         # TODO: other file systems like panasis
 
         configure(
-            "--prefix=" + prefix,
-            "--enable-f77", "--enable-fc", "--enable-cxx",
-            "--enable-shared", "--enable-sharedlibs=gcc",
-            "--enable-debuginfo",
-            "--with-pm=no", "--with-pmi=slurm",
-            "--enable-romio", "--with-file-system=lustre+nfs+ufs",
-            "--disable-mpe", "--without-mpe",
-            "--disable-silent-rules",
-            *configure_args)
+              "--prefix=" + prefix,
+              "--enable-f77", "--enable-fc", "--enable-cxx",
+              "--enable-shared", #"--enable-sharedlibs=gcc",
+              "--enable-debuginfo",
+              "--with-pm=no", "--with-pmi=slurm",
+              "--enable-romio", "--with-file-system=lustre+nfs+ufs",
+              "--disable-mpe", "--enable-mpe",
+              "--disable-silent-rules",
+              *configure_args)
 
         make()
 

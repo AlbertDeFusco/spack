@@ -27,7 +27,7 @@ class Vim(Package):
 
     feature_sets = ('huge', 'big', 'normal', 'small', 'tiny')
     for fs in feature_sets:
-      variant(fs, default=False, description="Use '{}' feature set".format(fs))
+      variant(fs, default=False, description="Use '{0}' feature set".format(fs))
 
     variant('python', default=False, description="build with Python")
     depends_on('python', when='+python')

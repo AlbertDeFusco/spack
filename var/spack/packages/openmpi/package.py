@@ -40,9 +40,10 @@ class Openmpi(Package):
             config_args.append("--enable-mpi-fortran=no")
 
 	if spec.satisfies("=haswell"):
-	  config_args.extend([ "--with-slurm",
+	  config_args.extend([ "--with-pmi",
 	                       "--enable-mpi-fortran",
-			       "--with-openib"
+			       "--with-verbs",
+                 "--enable-mpi-thread-multiple","--enable-heterogeneous",
 			       ])
 	  #config_args.append('CCFLAGS="-lpthread"')
 	  #config_args.append('CXXFLAGS="-lpthread"')

@@ -52,12 +52,19 @@ class Boost(Package):
 
     def install(self, spec, prefix):
         bootstrap = Executable('./bootstrap.sh')
-        bootstrap()
+        boot_args=['--prefix=%s' % prefix]
+        if spec.satisfies('%intel'):
+          boot_args.extend( ["--with-toolset=intel-linux",
+                           "linkflags=-Wl,-rpath,/opt/sam/intel/lib/intel64"])
+        bootstrap(*boot_args)
 
         # b2 used to be called bjam, before 1.47 (sigh)
         b2name = './b2' if spec.satisfies('@1.47:') else './bjam'
-
         b2 = Executable(b2name)
-        b2('install',
+
+        b2_args = ['install',
            '-j %s' % make_jobs,
-           '--prefix=%s' % prefix)
+           '--prefix=%s' % prefix]
+        
+
+        b2(*b2_args)

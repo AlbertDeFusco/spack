@@ -102,7 +102,7 @@ curl = which("curl", required=True)
 # Whether to build in tmp space or directly in the stage_path.
 # If this is true, then spack will make stage directories in
 # a tmp filesystem, and it will symlink them into stage_path.
-use_tmp_stage = False
+use_tmp_stage = True
 
 # Locations to use for staging and building, in order of preference
 # Use a %u to add a username to the stage paths here, in case this

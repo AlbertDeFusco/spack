@@ -37,7 +37,8 @@ class Fftw(Package):
 	  config_args.extend( ["--enable-avx",
 	                       "--enable-fma",
 			       "--enable-openmp",
-			       "--enable-mpi"] )
+			       "--enable-mpi",
+                   "MPICC=mpicc"] )
 
 
         configure(*config_args) 

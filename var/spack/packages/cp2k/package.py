@@ -15,6 +15,7 @@
 # packages.
 #
 from spack import *
+import spack
 
 class Cp2k(Package):
     """FIXME: put a proper description of your package here."""
@@ -24,14 +25,25 @@ class Cp2k(Package):
 
     version('2.6.1', 'bbeb19e7d5f1e2d29b3efa966ce00c45')
 
+    #patch('makefile.patch')
+
     # FIXME: Add dependencies if this package requires them.
-    # depends_on("foo")
+    depends_on("mpi")
+    depends_on("fftw")
+    depends_on("libxc")
+    depends_on("libint")
 
     def install(self, spec, prefix):
-        # FIXME: Modify the configure line to suit your build system here.
-        configure("--prefix=%s" % prefix)
-        # cmake(".", *std_cmake_args)
+      #get the site-specific Makefile
+      pkg_dir = spack.db.dirname_for_package_name('cp2k')
+      if spec.satisfies("=haswell"):
+        arch='SaM'
+        makeFile=join_path(pkg_dir,'SaM.popt')
+        cp = which('cp')
+        cp(makeFile,join_path(self._stage.path,'cp2k-2.6.1','arch'))
 
-        # FIXME: Add logic to build and install here
-        make()
-        make("install")
+
+      with working_dir('makefiles'):
+        stage_dir = ancestor('.',n=1)
+        make('CP2KHOME=%s' % stage_dir,
+          'ARCH=SaM','VERSION=popt')

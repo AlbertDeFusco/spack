@@ -96,10 +96,11 @@ class Mvapich2(Package):
               "--enable-f77", "--enable-fc", "--enable-cxx",
               "--enable-shared", #"--enable-sharedlibs=gcc",
               "--enable-debuginfo",
-              "--with-pm=no", "--with-pmi=slurm",
+              "--with-pm=slurm", "--with-pmi=pmi2",
               "--enable-romio", "--with-file-system=lustre+nfs+ufs",
               "--disable-mpe", "--enable-mpe",
               "--disable-silent-rules",
+              #"LDFLAGS=-Wl,-rpath,/opt/sam/intel/lib/intel64",
               *configure_args)
 
         make()

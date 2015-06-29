@@ -264,8 +264,8 @@ done
 for dir in "${libraries[@]}"; do
     [[ dir = $SPACK_INSTALL* ]] && rpaths+=("$dir")
 done
-rpaths+=("$SPACK_PREFIX/lib")
-rpaths+=("$SPACK_PREFIX/lib64")
+#rpaths+=("$SPACK_PREFIX/lib")
+#rpaths+=("$SPACK_PREFIX/lib64")
 
 # Put the arguments together
 args=()

@@ -13,6 +13,7 @@ LD       = mpif90 -lstdc++
 AR       = xiar -r
 DFLAGS   = -D__INTEL \
            -D__FFTSG \
+       -D__MKL \
 	   -D__parallel \
 	   -D__HAS_NO_MPI_MOD \
 	   -D__BLACS \
@@ -21,13 +22,12 @@ DFLAGS   = -D__INTEL \
 	   -D__LIBINT \
 	   -D__LIBXC2 \
 	   -D__DATA_DIR="'<data-dir>'"
-       #-D__MKL \
 
-CPPFLAGS = -C $(DFLAGS) -P -traditional
+CPPFLAGS = -C $(DFLAGS) -P -traditional -traceback
 
 FCFLAGS  = $(DFLAGS) \
        -xHOST \
-       -O2 \
+       -O2 -openmp -traceback \
 	   -heap-arrays 64 -funroll-loops \
 	   -fpp -free \
 	   -convert big_endian
@@ -35,7 +35,7 @@ FCFLAGS  = $(DFLAGS) \
 	   #-I$(FFTW_ROOT)/include \
 
 FCFLAGS2 = $(DFLAGS) \
-       -xHOST \
+       -xHOST -openmp -traceback \
        -O1 -heap-arrays 64 \
 	   -fpp -free
 
@@ -46,17 +46,18 @@ LDFLAGS =
 	   #-L$(LIBXC_ROOT)/lib \
 	   #-L$(FFTW_ROOT)/lib
 
-LIBS     = -lmkl_rt \
+LIBS     = -lfftw3_omp -lfftw3 \
+           -lmkl_rt \
            -lmkl_blas95_lp64 \
-	       -lmkl_lapack95_lp64 \
-	       -lmkl_scalapack_lp64 \
-	       -lmkl_blacs_openmpi_lp64 \
-	       -lfftw3 \
+           -lmkl_lapack95_lp64 \
+           -lmkl_scalapack_lp64 \
+           -lmkl_blacs_openmpi_lp64 \
 	       -liomp5 \
 	       -lderiv \
 	       -lint \
 	       -lr12 \
 	       -lxc
+
 
 OBJECTS_ARCHITECTURE = machine_intel.o
 ##For compiler 11.0 one may want to try the following flags:

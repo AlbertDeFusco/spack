@@ -33,12 +33,13 @@ class Fftw(Package):
         # FIXME: Modify the configure line to suit your build system here.
         config_args = ["--prefix=%s" % prefix] #, "CC=mpicc", "CXX=mpicxx", "FC=mpif90"]
 
-	if spec.satisfies("=haswell"):
-	  config_args.extend( ["--enable-avx",
-	                       "--enable-fma",
-			       "--enable-openmp",
-			       "--enable-mpi",
+        if spec.satisfies("=haswell"):
+          config_args.extend( ["--enable-openmp",
+            "--enable-mpi",
                    "MPICC=mpicc"] )
+        if spec.satisfies('%intel'):
+          config_args.extend( ["--enable-avx","--enable-fma",
+            "CFLAGS=-xHOST", "FFLAGS=-xHOST" ] )
 
 
         configure(*config_args) 

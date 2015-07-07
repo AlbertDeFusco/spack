@@ -12,6 +12,8 @@ class Hdf5(Package):
     list_depth = 3
 
     version('1.8.13', 'c03426e9e77d7766944654280b467289')
+    version('1.8.15', '03cccb5b33dbe975fdcd8ae9dc021f24')
+    version('1.8.15-patch1', '4467c25ed9c0b126b194a4d9d66c29ac')
 
     depends_on("mpi")
     depends_on("zlib")
@@ -19,15 +21,21 @@ class Hdf5(Package):
     # TODO: currently hard-coded to use OpenMPI
     def install(self, spec, prefix):
 
-        configure(
+        conf_args= [
             "--prefix=%s" % prefix,
             "--with-zlib=%s" % spec['zlib'].prefix,
             "--enable-parallel",
             "--enable-shared",
-            "CC=mpicc", "CXX=mpicxx")
+            "CC=mpicc", "CXX=mpicxx"]
             #"CC=%s" % spec['mpich'].prefix.bin + "/mpicc",
             #"CXX=%s" % spec['mpich'].prefix.bin + "/mpic++")
 
+        if spec.satisfies('%intel'):
+          conf_args.extend( [ "CFLAGS=-xHOST",
+                              "CXXFLAGS=-xHOST",
+                              "FCFLAGS=-xHOST" ] )
+
+        configure(*conf_args)
         make()
         make("install")
 

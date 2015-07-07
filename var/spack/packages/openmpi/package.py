@@ -39,12 +39,18 @@ class Openmpi(Package):
         if not self.compiler.f77 and not self.compiler.fc:
             config_args.append("--enable-mpi-fortran=no")
 
+	if spec.satisfies("%intel"):
+	  config_args.extend([ "CFLAGS=-xHOST",
+                           "CXXFLAGS=-xHOST",
+                           "FCFLAGS=-xHOST" ])
+
 	if spec.satisfies("=haswell"):
 	  config_args.extend([ "--with-pmi",
 	                       "--enable-mpi-fortran",
 			       "--with-verbs",
                  "--enable-mpi-thread-multiple","--enable-heterogeneous",
 			       ])
+
 	  #config_args.append('CCFLAGS="-lpthread"')
 	  #config_args.append('CXXFLAGS="-lpthread"')
 

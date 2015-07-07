@@ -29,8 +29,11 @@ class Libxc(Package):
 
     def install(self, spec, prefix):
         # FIXME: Modify the configure line to suit your build system here.
-        configure("--prefix=%s" % prefix)
+        conf_args = ["--prefix=%s" % prefix]
+        if spec.satisfies('%intel'):
+          conf_args.extend([ "CFLAGS=-xHOST", "FCFLAGS=-xHOST" ])
 
         # FIXME: Add logic to build and install here
+        configure(*conf_args)
         make()
         make("install")

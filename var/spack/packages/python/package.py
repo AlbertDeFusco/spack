@@ -26,6 +26,7 @@ class Python(Package):
     def install(self, spec, prefix):
         # Need this to allow python build to find the Python installation.
         env['PYTHONHOME'] = prefix
+	env['LDFLAGS'] = "-Wl,-rpath=\$$ORIGIN/../lib"
 
         # Rest of install is pretty standard.
         configure("--prefix=%s" % prefix,

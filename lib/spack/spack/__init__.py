@@ -23,14 +23,14 @@
 # Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 import os
-from cpuinfo import cpuinfo
+#from cpuinfo import cpuinfo
 import tempfile
 from llnl.util.filesystem import *
 
-def samArch():
-  cpu=cpuinfo.get_cpu_info()['brand'].split()[3:5]
-  if(cpu[0] == "E5-2620" and cpu[1] == "v3"):
-    return "haswell"
+#def samArch():
+#  cpu=cpuinfo.get_cpu_info()['brand'].split()[3:5]
+#  if(cpu[0] == "E5-2620" and cpu[1] == "v3"):
+#    return "haswell"
 
 
 # This lives in $prefix/lib/spack/spack/__file__
@@ -132,7 +132,7 @@ do_checksum = True
 # 3. A function that returns a string:
 #    Spack will use this function to determine the sys_type.
 #
-sys_type = samArch()
+sys_type = "haswell" #samArch()
 
 
 #

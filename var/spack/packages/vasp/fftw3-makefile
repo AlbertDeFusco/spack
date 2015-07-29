@@ -1,0 +1,13 @@
+--- a/arch/makefile.include.linux_intel	2015-07-14 10:24:28.864452776 -0400
++++ b/arch/makefile.inxlude.linux_intel	2015-07-14 10:24:51.133999721 -0400
+@@ -23,9 +23,7 @@
+ BLACS      = -lmkl_blacs_openmpi_lp64
+ SCALAPACK  = $(MKL_PATH)/libmkl_scalapack_lp64.a $(BLACS)
+ 
+-OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o \
+-             $(MKLROOT)/interfaces/fftw3xf/libfftw3xf_intel.a
+-INCS       =-I$(MKLROOT)/include/fftw
++OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+ 
+ LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS)
+ 

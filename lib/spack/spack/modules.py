@@ -119,6 +119,7 @@ class EnvModule(object):
                     ('MANPATH', self.spec.prefix.share_man),
                     ('LIBRARY_PATH', self.spec.prefix.lib),
                     ('LIBRARY_PATH', self.spec.prefix.lib64),
+                    ('CPATH', self.spec.prefix.include),
                     ('LD_LIBRARY_PATH', self.spec.prefix.lib),
                     ('LD_LIBRARY_PATH', self.spec.prefix.lib64),
                     ('PKG_CONFIG_PATH', join_path(self.spec.prefix.lib, 'pkgconfig')),

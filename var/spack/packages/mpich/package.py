@@ -41,10 +41,10 @@ class Mpich(Package):
 
     def setup_dependent_environment(self, module, spec, dep_spec):
         """For dependencies, make mpicc's use spack wrapper."""
-        os.environ['MPICH_CC']  = 'cc'
-        os.environ['MPICH_CXX'] = 'c++'
-        os.environ['MPICH_F77'] = 'f77'
-        os.environ['MPICH_F90'] = 'f90'
+        os.environ['CC']  = 'cc'
+        os.environ['CXX'] = 'c++'
+        os.environ['F77'] = 'f77'
+        os.environ['F90'] = 'f90'
 
 
     def install(self, spec, prefix):

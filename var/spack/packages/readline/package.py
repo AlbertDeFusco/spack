@@ -17,5 +17,5 @@ class Readline(Package):
 
     def install(self, spec, prefix):
         configure("--prefix=%s" % prefix)
-        make("SHLIB_LIBS=-lncurses")
+        make("SHLIB_LIBS=-lncursesw")
         make("install")

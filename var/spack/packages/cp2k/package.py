@@ -25,8 +25,10 @@ class Cp2k(Package):
 
     version('2.6.1', 'bbeb19e7d5f1e2d29b3efa966ce00c45')
 
-    patch('data_dir.patch')
-    patch('path_length.patch')
+    version('2.6.x', svn='http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch')
+
+    #patch('data_dir.patch')
+    #patch('path_length.patch')
 
     # FIXME: Add dependencies if this package requires them.
     depends_on("mpi")
@@ -35,11 +37,15 @@ class Cp2k(Package):
     depends_on("libint")
 
     def install(self, spec, prefix):
+      if spec.satisfies("@2.6.x"):
+        stageDir=join_path(self._stage.path,'cp2k-2_6-branch','cp2k')
+      else:
+        stageDir=join_path(self._stage.path,'cp2k-2.6.1')
+
       #get the site-specific Makefile
       pkg_dir = spack.db.dirname_for_package_name('cp2k')
       if spec.satisfies("=haswell"):
         arch='SaM'
-        stageDir=join_path(self._stage.path,'cp2k-2.6.1')
         cp = which('cp')
         for file in ['SaM.popt','SaM.psmp']:
           makeFile=join_path(pkg_dir,file)
@@ -59,18 +65,24 @@ class Cp2k(Package):
           archMake=join_path(stageDir,'arch',file)
           filter_file(r'-lxc','-lxcf90 -lxc',archMake)
 
+      if spec.satisfies("^mvapich2"):
+        for file in ['SaM.popt','SaM.psmp']:
+          archMake=join_path(stageDir,'arch',file)
+          filter_file(r'blacs_openmpi','blacs_intelmpi',archMake)
+          #filter_file(r'mpif90','mpif77',archMake)
+ 
 
-      with working_dir('makefiles'):
+
+      with working_dir(join_path(stageDir,'makefiles')):
         stage_dir = ancestor('.',n=1)
         for vers in ['popt','psmp']:
-          make('CP2KHOME=%s' % stage_dir,
+          make('cp2k','CP2KHOME=%s' % stage_dir,
             'ARCH=SaM','VERSION=%s' % vers)
 
-      stage_dir=join_path(self._stage.path,'cp2k-2.6.1')
-      exe_dir=join_path(stage_dir,'exe','SaM')
+      exe_dir=join_path(stageDir,'exe','SaM')
       mkdirp(join_path(prefix.bin))
       for vers in ['popt','psmp']:
         install( join_path(exe_dir,'cp2k.%s' % vers),join_path(prefix.bin))
 
       rsync=which('rsync')
-      rsync('-a',join_path(stage_dir,'data'),join_path(prefix))
+      rsync('-a',join_path(stageDir,'data'),join_path(prefix))

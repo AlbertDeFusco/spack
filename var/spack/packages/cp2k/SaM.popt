@@ -7,7 +7,7 @@
 #module load boost/1.57.0-intel15
 #module load libxc/2.0.2-intel15
 #
-CC       = icc
+CC       = cc
 FC       = mpif90 
 LD       = mpif90 -lstdc++
 AR       = xiar -r

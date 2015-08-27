@@ -35,12 +35,17 @@ class Vasp(Package):
     def install(self, spec, prefix):
       cp = which('cp')
       stage_dir = join_path(ancestor('.',n=1),'vasp.%s' % spec.version)
+
       if spec.satisfies('%intel'):
         cp( join_path(stage_dir,'arch','makefile.include.linux_intel'),
             join_path(stage_dir,'makefile.include') )
 
-      filter_file(r'OFLAG      = -O2','OFLAG      = -O2 -xHOST',
-        join_path(stage_dir,'makefile.include') )
+        if spec.satisfies("^mvapich2"):
+          filter_file(r'blacs_openmpi','blacs_intelmpi',
+            join_path(stage_dir,'makefile.include') )
+
+        filter_file(r'OFLAG      = -O2','OFLAG      = -O2 -xHOST',
+          join_path(stage_dir,'makefile.include') )
 
 
 

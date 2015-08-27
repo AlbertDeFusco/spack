@@ -15,13 +15,17 @@ class Metis(Package):
     depends_on('mpi')
 
     def install(self, spec, prefix):
-        cmake(".",
-              '-DGKLIB_PATH=%s/GKlib' % pwd(),
-              '-DSHARED=1',
-              '-DCMAKE_C_COMPILER=mpicc',
-              '-DCMAKE_CXX_COMPILER=mpicxx',
-              '-DSHARED=1',
-              *std_cmake_args)
 
-        make()
-        make("install")
+        with working_dir( 'build', create=True ):
+
+            cmake( "..",
+                   '-DGKLIB_PATH=%s/../GKlib' % pwd(),
+                   '-DSHARED=1',
+                   '-DCMAKE_C_COMPILER=mpicc',
+                   '-DCMAKE_CXX_COMPILER=mpicxx',
+                   '-DSHARED=1',
+                   '-DOPENMP=on',
+                   *std_cmake_args )
+
+            make()
+            make( "install" )

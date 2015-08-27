@@ -11,19 +11,23 @@ class Parmetis(Package):
     version('4.0.3', 'f69c479586bf6bb7aff6a9bc0c739628')
 
     depends_on('mpi')
-    depends_on('metis')
+#    depends_on('metis')
 
     def install(self, spec, prefix):
-        cmake(".",
-              '-DGKLIB_PATH=%s/metis/GKlib' % pwd(),
-              '-DMETIS_PATH=%s/metis' % pwd(),
-              '-DSHARED=1',
-              '-DCMAKE_C_COMPILER=mpicc',
-              '-DCMAKE_CXX_COMPILER=mpicxx',
-              '-DCMAKE_C_FLAGS=-fPIC',
-              '-DCMAKE_CXX_FLAGS=-fPIC',
-              '-DSHARED=1',
-              *std_cmake_args)
 
-        make()
-        make("install")
+        with working_dir( 'build', create=True ):
+
+            cmake("..",
+                  '-DGKLIB_PATH=%s/../metis/GKlib' % pwd(),
+                  '-DMETIS_PATH=%s/../metis' % pwd(),
+                  '-DSHARED=1',
+                  '-DCMAKE_C_COMPILER=mpicc',
+                  '-DCMAKE_CXX_COMPILER=mpicxx',
+                  '-DCMAKE_C_FLAGS=-fPIC',
+                  '-DCMAKE_CXX_FLAGS=-fPIC',
+                  '-DSHARED=1',
+                  '-DOPENMP=on',
+                  *std_cmake_args)
+
+            make()
+            make("install")
